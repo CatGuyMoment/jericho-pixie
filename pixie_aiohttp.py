@@ -12,6 +12,8 @@ import json
 import aiohttp
 
 import socket
+
+SSL = False
 def random_hash():
     return "%016x" % random.getrandbits(64)
 
@@ -55,7 +57,7 @@ class PixConnection:
         # return response.json()
 
         #aiohttp implementation
-        async with self.session.get(url=url,headers=self.get_headers()) as response:
+        async with self.session.get(ssl=SSL,url=url,headers=self.get_headers()) as response:
                 if response.headers['Content-Type'] == 'text/html':
                     print(response.request_info.headers)
                     print(await response.text())
@@ -72,7 +74,7 @@ class PixConnection:
     
         #aiohttp implementation
 
-        async with self.session.post(url=url,json=payload,data=data,headers=headers) as response:
+        async with self.session.post(ssl=SSL,url=url,json=payload,data=data,headers=headers) as response:
             if response.headers['Content-Type'] == 'text/html':
                     print(response.request_info.headers)
                     print(await response.text())
