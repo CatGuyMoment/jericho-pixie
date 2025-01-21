@@ -198,7 +198,7 @@ async def main():
         
         main_conn.change_session(session)
 
-        for competence_id in main_competences:
+        for competence_id in main_competences[8:]:
 
             main_assessment_id = await main_conn.start_or_resume(competence_id)
 
