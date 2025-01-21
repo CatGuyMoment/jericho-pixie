@@ -24,8 +24,8 @@ import sqlite3
 # MAIN_PASSWORD = 'iAmSoCool11'
 
 #perfectionist testaccount with cache: 10 pix (LOLLLL)
-MAIN_EMAIL = 'croquepoisson@baguette.fr'
-MAIN_PASSWORD = 'Ccroquepoisson123'
+MAIN_EMAIL = 'azelyatdinov@florimont-edu.ch'
+MAIN_PASSWORD = 'Wyfobuh327%'
 
 
 
@@ -130,8 +130,8 @@ def main():
 
 
     main_conn = PixConnection()
-    # main_conn.login(MAIN_EMAIL,MAIN_PASSWORD)
-    main_conn.signup_random_account()
+    main_conn.login(MAIN_EMAIL,MAIN_PASSWORD)
+    # main_conn.signup_random_account()
     
     main_competences = main_conn.get_competences() #these don't change relative to accounts so we only have to get them once
 
@@ -160,6 +160,7 @@ def main():
 
                 correct_answer = '#ABAND#'
                     
+                print('resorting to sql database...')
                 sql_response = get_from_cache(competence_id,attributes_parsed)
                 if sql_response:
                     correct_answer = sql_response[0]
