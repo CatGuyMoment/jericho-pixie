@@ -12,7 +12,6 @@ LANG = 'fr'
 
 if not ssl:
     urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
-# import aiohttp
 
 
 def random_hash():
