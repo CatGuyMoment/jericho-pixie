@@ -1,30 +1,18 @@
 
 from pixie_sync import PixConnection
-import aiohttp
-import asyncio
-
-
 import urllib.parse
-from tqdm.asyncio import tqdm_asyncio
-import re
-import time
-
 import sqlite3
 
 MAIN_EMAIL = input('email = ? ')
 MAIN_PASSWORD = input('password = ? ')
 
-
-
 IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it doesn't know the answer to a question 
-
 
 
 sql_connection = sqlite3.connect('answers_save.db')
 cursor = sql_connection.cursor()
 
 answer_cache = {}
-
 
 
 #i doubt pix is gonna intentionally feed me an sql injection
@@ -46,8 +34,6 @@ def get_from_cache(competence_id,attributes):
     return sql.fetchone()
 
 
-
-
 def parse_qrocm(input_text):
     output = ''
     already_selected = False
@@ -66,13 +52,7 @@ def parse_qrocm(input_text):
     return output[:-1]
 
 
-        
-
-
 def main():
-
-
-
 
     main_conn = PixConnection()
     main_conn.login(MAIN_EMAIL,MAIN_PASSWORD)
@@ -81,16 +61,12 @@ def main():
     main_competences = main_conn.get_competences() #these don't change relative to accounts so we only have to get them once
 
     create_tables(main_competences)    
-    
 
     for competence_id in main_competences:
 
             main_assessment_id = main_conn.start_or_resume(competence_id)
 
-
-
             main_challenge_id = True
-
             completed = True
 
             while main_challenge_id:
@@ -102,13 +78,12 @@ def main():
         
                 attributes_parsed = urllib.parse.urlencode(challenge_attributes)
 
-
                 correct_answer = '#ABAND#'
                     
                 sql_response = get_from_cache(competence_id,attributes_parsed)
+
                 if sql_response:
                     correct_answer = sql_response[0]
-
                 else:
                     print('no answer found :c')
                     if IS_PERFECTIONIST:
@@ -117,19 +92,17 @@ def main():
                         break
 
                 _, is_correct = main_conn.answer_question(main_challenge_id,main_assessment_id,correct_answer)
+
                 if not is_correct:
                     print('put an answer in, but its wrong???')
                     print(correct_answer)
                     print(challenge_attributes)
                 else:
                     print('put a CORRECT answer in!!!')
-            
+
             if completed:
                 main_conn.complete_assessment(main_assessment_id)
-    sql_connection.close()           
 
-
-
-
+    sql_connection.close()      
 
 main()
