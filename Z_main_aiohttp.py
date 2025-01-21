@@ -21,8 +21,8 @@ import sqlite3
 # MAIN_PASSWORD = 'iAmSoCool11'
 
 #perfectionist testaccount with cache: 10 pix (LOLLLL)
-MAIN_EMAIL = 'azelyatdinov@florimont-edu.ch'
-MAIN_PASSWORD = 'Wyfobuh327%'
+MAIN_EMAIL = ''
+MAIN_PASSWORD = ''
 
 
 IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it doesn't know the answer to a question 
@@ -185,6 +185,9 @@ async def main():
     # random_conns = load_saved_accounts()
     # write_accounts(random_conns)
     timeout = aiohttp.ClientTimeout(total=3600)
+
+    main_competences = main_competences[6:]
+
     async with aiohttp.ClientSession(timeout=timeout) as session:
         
         main_conn.change_session(session)
