@@ -157,7 +157,7 @@ class PixConnection:
         url = f'https://app.pix.org/api/assessments/{assessment_id}/next'
         
         data = self.get(url)['data']
-        data = self.get(url)['data']
+
         if not data:
             return None, None
 

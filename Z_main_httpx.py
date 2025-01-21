@@ -108,7 +108,7 @@ async def generate_accounts(amount_to_generate):
     tasks = []
     connections = []
     # async with aiohttp.ClientSession() as session:
-    async with httpx.AsyncClient(timeout=None,verify=False) as session:
+    async with httpx.AsyncClient(timeout=None,verify=context) as session:
         for _ in range(amount_to_generate):
             new_conn = PixConnection(session)
             tasks.append(new_conn.signup_random_account())
@@ -179,7 +179,7 @@ async def main():
     main_competences = None
    
     # async with aiohttp.ClientSession() as session:
-    async with httpx.AsyncClient(timeout=timeout,verify=False) as session:
+    async with httpx.AsyncClient(timeout=timeout,verify=context) as session:
         main_conn = PixConnection(session)
 
 
@@ -194,7 +194,7 @@ async def main():
     # write_accounts(random_conns)
 
     # async with aiohttp.ClientSession() as session:
-    async with httpx.AsyncClient(timeout=timeout,verify=False) as session:
+    async with httpx.AsyncClient(timeout=timeout,verify=context) as session:
         
         main_conn.change_session(session)
 
