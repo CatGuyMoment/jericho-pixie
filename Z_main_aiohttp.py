@@ -21,8 +21,8 @@ import sqlite3
 # MAIN_PASSWORD = 'iAmSoCool11'
 
 #perfectionist testaccount with cache: 10 pix (LOLLLL)
-MAIN_EMAIL = ''
-MAIN_PASSWORD = ''
+MAIN_EMAIL = 'azelyatdinov@florimont-edu.ch'
+MAIN_PASSWORD = 'Wyfobuh327%'
 
 
 IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it doesn't know the answer to a question 
