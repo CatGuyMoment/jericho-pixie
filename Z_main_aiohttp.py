@@ -186,7 +186,7 @@ async def main():
     # write_accounts(random_conns)
     timeout = aiohttp.ClientTimeout(total=3600)
 
-    main_competences = main_competences[6:]
+    main_competences = main_competences[11:]
 
     async with aiohttp.ClientSession(timeout=timeout) as session:
         
