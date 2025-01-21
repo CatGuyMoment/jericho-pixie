@@ -24,13 +24,12 @@ import sqlite3
 # MAIN_PASSWORD = 'iAmSoCool11'
 
 #perfectionist testaccount with cache: 10 pix (LOLLLL)
-MAIN_EMAIL = 'awdasd@awduniversity.org'
-MAIN_PASSWORD = 'abcdefg12345R'
+MAIN_EMAIL = 'sparkleman@awd.com'
+MAIN_PASSWORD = 'AABBcc323423'
 
 
 
 IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it doesn't know the answer to a question 
-BACKUP_ACCOUNTS = 100
 
 
 
@@ -144,9 +143,11 @@ def main():
             main_assessment_id = main_conn.start_or_resume(competence_id)
 
 
-        
 
             main_challenge_id = True
+
+            completed = True
+
             while main_challenge_id:
                 main_challenge_id, challenge_attributes = main_conn.get_current_challenge(main_assessment_id)
 
@@ -169,6 +170,7 @@ def main():
                     print('no answer found :c')
                     if IS_PERFECTIONIST:
                         print('SKIPPING:\n\n')
+                        completed = False
                         break
 
                 _, is_correct = main_conn.answer_question(main_challenge_id,main_assessment_id,correct_answer)
@@ -178,6 +180,9 @@ def main():
                     print(challenge_attributes)
                 else:
                     print('put a CORRECT answer in!!!')
+            
+            if completed:
+                print(main_conn.complete_assessment(main_assessment_id))
     sql_connection.close()           
 
 

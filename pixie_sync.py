@@ -42,13 +42,20 @@ class PixConnection:
         }
 
     def get(self,url):
-        response = requests.get(verify=False, url=url,headers= self.get_headers())
+        response = requests.get(verify=ssl, url=url,headers= self.get_headers())
         return response.json()
 
+    def patch(self,url,payload=None,data=None,headers=None):
+        if not headers:
+            headers = self.get_headers()
+        response = requests.patch(url,verify=ssl,json=payload,data=data,headers=headers)
+
+        return response.text
+    
     def post(self,url,payload=None,data=None,headers=None):
         if not headers:
             headers = self.get_headers()
-        response = requests.post(url,verify=False,json=payload,data=data,headers=headers)
+        response = requests.post(url,verify=ssl,json=payload,data=data,headers=headers)
 
         return response.json()
 
@@ -214,3 +221,36 @@ class PixConnection:
 
         return solution
     
+    def complete_assessment(self,assessment_id):
+        payload = {
+            "data":{
+                "id":assessment_id,
+                "attributes":{
+                    "certification-number":None,
+                    "code-campaign":None,
+                    "state":"started",
+                    "title":"Resolving technical problems",
+                    "type":"COMPETENCE_EVALUATION",
+                    "last-question-state":"asked",
+                    "method":"SMART_RANDOM",
+                    "has-ongoing-challenge-live-alert":None,
+                    "has-ongoing-companion-live-alert":None,
+                    "competence-id":"recIhdrmCuEmCDAzj"
+                },
+                "relationships":{
+                    "course":{
+                        "data":{
+                            "type":"courses",
+                            "id":"[NOT USED] CompetenceId is in Competence Evaluation."
+                        }
+                    },
+                    "progression":{
+                        "data":None
+                        }
+                },
+                "type":"assessments"
+                }
+            }
+        url = f'https://app.pix.org/api/assessments/{assessment_id}/complete-assessment'
+
+        return self.patch(url=url,payload=payload)
