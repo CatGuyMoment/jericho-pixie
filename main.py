@@ -160,11 +160,9 @@ def main():
 
                 correct_answer = '#ABAND#'
                     
-                print('resorting to sql database...')
                 sql_response = get_from_cache(competence_id,attributes_parsed)
                 if sql_response:
                     correct_answer = sql_response[0]
-                    print('fetched sql response!')
 
                 else:
                     print('no answer found :c')
