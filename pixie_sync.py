@@ -8,7 +8,7 @@ import urllib3
 import random
 
 ssl = False
-
+LANG = 'fr'
 
 if not ssl:
     urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
@@ -30,7 +30,7 @@ class PixConnection:
         return {
             "authorization": f"Bearer {self.auth_token}",
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36',
-            'accept-language': 'en',
+            'accept-language': LANG,
         }
 
     def get_login_headers(self):
@@ -77,7 +77,7 @@ class PixConnection:
                     "has-assessment-participations":False,
                     "has-recommended-trainings":False,
                     "code-for-last-profile-to-share":None,
-                    "lang":"en",
+                    "lang":LANG,
                     "locale":None,
                     "is-anonymous":False,
                     "should-see-data-protection-policy-information-banner":False,

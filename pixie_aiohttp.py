@@ -14,6 +14,8 @@ import aiohttp
 import socket
 
 SSL = False
+LANG = 'fr'
+
 def random_hash():
     return "%016x" % random.getrandbits(64)
 
@@ -34,7 +36,7 @@ class PixConnection:
             # 'Accept': '*/*',
             # 'Accept-Encoding': 'gzip, deflate, br',
             # 'content-type': 'application/json',
-            'accept-language': 'en',
+            'accept-language': LANG,
 
            
         }
@@ -98,7 +100,7 @@ class PixConnection:
                     "has-assessment-participations":False,
                     "has-recommended-trainings":False,
                     "code-for-last-profile-to-share":None,
-                    "lang":"en",
+                    "lang":LANG,
                     "locale":None,
                     "is-anonymous":False,
                     "should-see-data-protection-policy-information-banner":False,
