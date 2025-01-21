@@ -182,7 +182,7 @@ def main():
                     print('put a CORRECT answer in!!!')
             
             if completed:
-                print(main_conn.complete_assessment(main_assessment_id))
+                main_conn.complete_assessment(main_assessment_id)
     sql_connection.close()           
 
 
