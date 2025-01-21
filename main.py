@@ -1,5 +1,3 @@
-#use this when aiohttp goes down
-
 
 from pixie_sync import PixConnection
 import aiohttp
@@ -13,17 +11,6 @@ import time
 
 import sqlite3
 
-#aiohttp: SPEEEEDDDDDDDDDDD (until you get detected lol)
-
-#perfectionist testaccount: 522 pix
-# MAIN_EMAIL = 'perfectstudent@perfectionuniversity.edu'
-# MAIN_PASSWORD = 'iAmSoPerfect11'
-
-#non_perfectionist testaccount: 768 pix
-# MAIN_EMAIL = 'notperfectstudent@normaluniversity.edu'
-# MAIN_PASSWORD = 'iAmSoCool11'
-
-#perfectionist testaccount with cache: 10 pix (LOLLLL)
 MAIN_EMAIL = input('email = ? ')
 MAIN_PASSWORD = input('password = ? ')
 
@@ -33,16 +20,12 @@ IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it
 
 
 
-# CACHE PLAN:
-#FOR EVERY CATEGORY, CREATE A TABLE [competenceid], use attributes_parsed as the key.
-#GRAB STUFF FROM THE CATEGORY INSTEAD OF RELYING ON BACKUP ACCOUNTS
-
 sql_connection = sqlite3.connect('answers_save.db')
 cursor = sql_connection.cursor()
 
 answer_cache = {}
 
-# async_cap = asyncio.Semaphore(100)
+
 
 #i doubt pix is gonna intentionally feed me an sql injection
 def create_tables(competences):
@@ -56,7 +39,6 @@ def insert_into_cache(competence_id,attributes,answer):
     #we assume url-encoded stuff is sql-safe
 
     answer = answer.replace('"','""') #escaping the quotation marks
-    # print(f'INSERT INTO {competence_id} VALUES ( "{attributes}", "{answer}"  )')
     cursor.execute(f'INSERT OR IGNORE INTO {competence_id} VALUES ( "{attributes}", "{answer}"  )')
 
 def get_from_cache(competence_id,attributes):
@@ -84,43 +66,6 @@ def parse_qrocm(input_text):
     return output[:-1]
 
 
-
-# aync_cap = asyncio.Semaphore(50)
-
-
-
-def load_saved_accounts():
-    connections = []
-    with open('account_cache.mrrp') as file:
-        for line in file:
-            strip = line.strip()
-            connections.append(PixConnection(auth_token=strip))
-    return connections
-
-
-def write_accounts(connection_list):
-    for connection in connection_list:
-        with open("account_cache.mrrp", "a") as myfile:
-            myfile.write(connection.auth_token + '\n')
-
-async def generate_accounts(amount_to_generate):
-    tasks = []
-    connections = []
-    async with aiohttp.ClientSession() as session:
-        for _ in range(amount_to_generate):
-            new_conn = PixConnection(session)
-            tasks.append(new_conn.signup_random_account())
-            connections.append(new_conn) 
-        await tqdm_asyncio.gather(*tasks)
-    return connections
-
-
-
-
-        
-        
-
-        
         
 
 
