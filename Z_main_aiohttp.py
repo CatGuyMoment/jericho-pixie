@@ -21,8 +21,8 @@ import sqlite3
 # MAIN_PASSWORD = 'iAmSoCool11'
 
 #perfectionist testaccount with cache: 10 pix (LOLLLL)
-MAIN_EMAIL = 'mrs.memory@memorisationinstitute.edu'
-MAIN_PASSWORD = 'MeWhen1Memorize'
+MAIN_EMAIL = ''
+MAIN_PASSWORD = ''
 
 
 IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it doesn't know the answer to a question 
@@ -184,8 +184,8 @@ async def main():
     random_conns = await generate_accounts(BACKUP_ACCOUNTS)
     # random_conns = load_saved_accounts()
     # write_accounts(random_conns)
-
-    async with aiohttp.ClientSession() as session:
+    timeout = aiohttp.ClientTimeout(total=3600)
+    async with aiohttp.ClientSession(timeout=timeout) as session:
         
         main_conn.change_session(session)
 
@@ -207,6 +207,7 @@ async def main():
                 main_challenge_id, challenge_attributes = await main_conn.get_current_challenge(main_assessment_id)
 
                 if not main_challenge_id:
+                    print('assessment complete...\n\n')
                     break
         
                 attributes_parsed = urllib.parse.urlencode(challenge_attributes)
@@ -228,6 +229,7 @@ async def main():
                     else:
                         print('no answer found :c')
                         if IS_PERFECTIONIST:
+                            print('SKIPPING:\n\n')
                             break
 
                 _, is_correct = await main_conn.answer_question(main_challenge_id,main_assessment_id,correct_answer)

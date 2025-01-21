@@ -24,8 +24,9 @@ import sqlite3
 # MAIN_PASSWORD = 'iAmSoCool11'
 
 #perfectionist testaccount with cache: 10 pix (LOLLLL)
-MAIN_EMAIL = 'mrs.memory@memorisationinstitute.edu'
-MAIN_PASSWORD = 'MeWhen1Memorize'
+MAIN_EMAIL = 'awdasd@awduniversity.org'
+MAIN_PASSWORD = 'abcdefg12345R'
+
 
 
 IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it doesn't know the answer to a question 
@@ -131,6 +132,8 @@ def main():
 
     main_conn = PixConnection()
     main_conn.login(MAIN_EMAIL,MAIN_PASSWORD)
+    # main_conn.signup_random_account()
+    
     main_competences = main_conn.get_competences() #these don't change relative to accounts so we only have to get them once
 
     create_tables(main_competences)    
@@ -148,6 +151,7 @@ def main():
                 main_challenge_id, challenge_attributes = main_conn.get_current_challenge(main_assessment_id)
 
                 if not main_challenge_id:
+                    print('assessment complete...\n\n')
                     break
         
                 attributes_parsed = urllib.parse.urlencode(challenge_attributes)
@@ -164,6 +168,7 @@ def main():
                 else:
                     print('no answer found :c')
                     if IS_PERFECTIONIST:
+                        print('SKIPPING:\n\n')
                         break
 
                 _, is_correct = main_conn.answer_question(main_challenge_id,main_assessment_id,correct_answer)

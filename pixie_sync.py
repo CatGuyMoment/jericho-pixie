@@ -2,13 +2,16 @@
 
 import requests
 import urllib.parse
-
+import urllib3  
 
 
 import random
 
+ssl = False
 
 
+if not ssl:
+    urllib3.disable_warnings(category=urllib3.exceptions.InsecureRequestWarning)
 # import aiohttp
 
 
@@ -39,13 +42,13 @@ class PixConnection:
         }
 
     def get(self,url):
-        response = requests.get(url,headers= self.get_headers())
+        response = requests.get(verify=False, url=url,headers= self.get_headers())
         return response.json()
 
     def post(self,url,payload=None,data=None,headers=None):
         if not headers:
             headers = self.get_headers()
-        response = requests.post(url,json=payload,data=data,headers=headers)
+        response = requests.post(url,verify=False,json=payload,data=data,headers=headers)
 
         return response.json()
 
@@ -167,7 +170,7 @@ class PixConnection:
                     "value":value,
                     "result":None,
                     "result-details":None,
-                    "timeout":None,
+                    "timeout":10,
                     "focused-out":False
                 },
                 "relationships":{
@@ -211,5 +214,3 @@ class PixConnection:
 
         return solution
     
-
-print(PixConnection().signup_random_account())

@@ -193,7 +193,7 @@ class PixConnection:
                     "value":value,
                     "result":None,
                     "result-details":None,
-                    "timeout":None,
+                    "timeout":10,
                     "focused-out":False
                 },
                 "relationships":{
