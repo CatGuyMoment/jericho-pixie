@@ -108,7 +108,7 @@ async def generate_accounts(amount_to_generate):
     tasks = []
     connections = []
     # async with aiohttp.ClientSession() as session:
-    async with httpx.AsyncClient(timeout=None,verify=context) as session:
+    async with httpx.AsyncClient(timeout=None,verify=False) as session:
         for _ in range(amount_to_generate):
             new_conn = PixConnection(session)
             tasks.append(new_conn.signup_random_account())
@@ -179,11 +179,12 @@ async def main():
     main_competences = None
    
     # async with aiohttp.ClientSession() as session:
-    async with httpx.AsyncClient(timeout=timeout,verify=context) as session:
+    async with httpx.AsyncClient(timeout=timeout,verify=False) as session:
         main_conn = PixConnection(session)
 
 
-        await main_conn.login(MAIN_EMAIL,MAIN_PASSWORD)
+        # await main_conn.login(MAIN_EMAIL,MAIN_PASSWORD)
+        await main_conn.signup_random_account()
         main_competences = await main_conn.get_competences() #these don't change relative to accounts so we only have to get them once
 
     create_tables(main_competences)    
@@ -193,11 +194,11 @@ async def main():
     # write_accounts(random_conns)
 
     # async with aiohttp.ClientSession() as session:
-    async with httpx.AsyncClient(timeout=timeout,verify=context) as session:
+    async with httpx.AsyncClient(timeout=timeout,verify=False) as session:
         
         main_conn.change_session(session)
 
-        for competence_id in main_competences[11:]:
+        for competence_id in main_competences:
 
             main_assessment_id = await main_conn.start_or_resume(competence_id)
 

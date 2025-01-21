@@ -24,8 +24,8 @@ import sqlite3
 # MAIN_PASSWORD = 'iAmSoCool11'
 
 #perfectionist testaccount with cache: 10 pix (LOLLLL)
-MAIN_EMAIL = 'unclesam@unitedstates.us'
-MAIN_PASSWORD = 'aaa!!22dwawsA'
+MAIN_EMAIL = 'croquepoisson@baguette.fr'
+MAIN_PASSWORD = 'Ccroquepoisson123'
 
 
 

@@ -26,7 +26,7 @@ MAIN_PASSWORD = ''
 
 
 IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it doesn't know the answer to a question 
-BACKUP_ACCOUNTS = 100
+BACKUP_ACCOUNTS = 50
 
 
 
@@ -186,7 +186,7 @@ async def main():
     # write_accounts(random_conns)
     timeout = aiohttp.ClientTimeout(total=3600)
 
-    main_competences = main_competences[11:]
+    main_competences = main_competences
 
     async with aiohttp.ClientSession(timeout=timeout) as session:
         
