@@ -72,7 +72,6 @@ async def solve_competence(competence_id,main_conn):
         main_challenge_id, challenge_attributes = await main_conn.get_current_challenge(main_assessment_id)
 
         if not main_challenge_id:
-            print('assessment complete...\n\n')
             break
         
         attributes_parsed = urllib.parse.urlencode(challenge_attributes)
@@ -96,8 +95,6 @@ async def solve_competence(competence_id,main_conn):
             print('put an answer in, but its wrong???')
             print(correct_answer)
             print(challenge_attributes)
-        else:
-            print('put a CORRECT answer in!!!')
 
     if completed:
         await main_conn.complete_assessment(main_assessment_id)
