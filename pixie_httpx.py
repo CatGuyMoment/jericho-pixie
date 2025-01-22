@@ -19,9 +19,9 @@ def random_hash():
 
 class PixConnection:
 
-    def __init__(self,aiohttp_session=None,auth_token=''):
+    def __init__(self,httpx_session=None,auth_token=''):
         self.auth_token = auth_token
-        self.session = aiohttp_session
+        self.session = httpx_session
     
     def change_session(self,aiohttp_session):
         self.session = aiohttp_session
