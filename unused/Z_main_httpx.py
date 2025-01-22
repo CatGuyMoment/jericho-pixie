@@ -27,7 +27,7 @@ MAIN_PASSWORD = 'MeWhen1Memorize'
 
 
 IS_PERFECTIONIST = True #if this is on, it will move onto the next topic when it doesn't know the answer to a question 
-BACKUP_ACCOUNTS = 50
+BACKUP_ACCOUNTS = 150
 
 
 
@@ -198,7 +198,7 @@ async def main():
         
         main_conn.change_session(session)
 
-        for competence_id in main_competences[8:]:
+        for competence_id in main_competences:
 
             main_assessment_id = await main_conn.start_or_resume(competence_id)
 
