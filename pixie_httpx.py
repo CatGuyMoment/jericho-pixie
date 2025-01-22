@@ -1,15 +1,10 @@
 #what if i cry
 
 # import requests
-import urllib.parse
-
 import random
-
-import asyncio
 
 import base64
 import json 
-import aiohttp
 
 
 LANG = 'fr'
