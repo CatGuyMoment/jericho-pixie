@@ -3,6 +3,7 @@ from pixie_httpx import PixConnection
 import urllib.parse
 import sqlite3
 
+from tqdm.asyncio import tqdm_asyncio
 import asyncio
 import httpx
 import ssl
@@ -104,17 +105,17 @@ async def solve_competence(competence_id,main_conn):
 async def main():
     async with httpx.AsyncClient(timeout=timeout,verify=context) as session:
         main_conn = PixConnection(httpx_session=session)
-        await main_conn.login(MAIN_EMAIL,MAIN_PASSWORD)
-        # await main_conn.signup_random_account()
+        # await main_conn.login(MAIN_EMAIL,MAIN_PASSWORD)
+        await main_conn.signup_random_account()
     
-        main_competences = main_conn.get_competences() #these don't change relative to accounts so we only have to get them once
+        main_competences = await main_conn.get_competences() #these don't change relative to accounts so we only have to get them once
 
         create_tables(main_competences)    
         tasks = []
         for competence_id in main_competences:
             tasks.append(solve_competence(competence_id,main_conn))
 
-        await asyncio.gather(*tasks)
+        await tqdm_asyncio.gather(*tasks)
         sql_connection.close()      
 
 

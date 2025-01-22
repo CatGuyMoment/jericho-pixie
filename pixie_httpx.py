@@ -66,6 +66,14 @@ class PixConnection:
         response = await self.session.post(url=url,json=payload,data=data,headers=headers)
         return response.json()
     
+    async def patch(self,url,payload=None,data=None,headers=None):
+
+        #httpx implementation
+        if not headers:
+            headers = self.get_headers()
+        await self.session.patch(url=url,json=payload,data=data,headers=headers)
+        return ''
+    
         #aiohttp implementation
         # async with self.session.post(url=url,json=payload,data=data,headers=headers) as response:
         #     if response.headers['Content-Type'] == 'text/html':
@@ -232,7 +240,39 @@ class PixConnection:
         solution = response['data']['attributes']['solution']
 
         return solution
+    async def complete_assessment(self,assessment_id):
+        payload = {
+            "data":{
+                "id":assessment_id,
+                "attributes":{
+                    "certification-number":None,
+                    "code-campaign":None,
+                    "state":"started",
+                    "title":"Resolving technical problems",
+                    "type":"COMPETENCE_EVALUATION",
+                    "last-question-state":"asked",
+                    "method":"SMART_RANDOM",
+                    "has-ongoing-challenge-live-alert":None,
+                    "has-ongoing-companion-live-alert":None,
+                    "competence-id":"recIhdrmCuEmCDAzj"
+                },
+                "relationships":{
+                    "course":{
+                        "data":{
+                            "type":"courses",
+                            "id":"[NOT USED] CompetenceId is in Competence Evaluation."
+                        }
+                    },
+                    "progression":{
+                        "data":None
+                        }
+                },
+                "type":"assessments"
+                }
+            }
+        url = f'https://app.pix.org/api/assessments/{assessment_id}/complete-assessment'
 
+        return await self.patch(url=url,payload=payload)
 
 # async def test():
     
